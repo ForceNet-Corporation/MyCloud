@@ -881,15 +881,22 @@
   }
 
   function downloadCurrent() {
-    if (!currentRecord || !currentFile) return;
-    const url = pb.files.getUrl(currentRecord, currentFile, { download: true });
+    if (!currentRecord || !currentFile) {
+      showToast('Сначала выберите файл');
+      return;
+    }
+
+    // PocketBase включает принудительное скачивание только при download=1.
+    // Значение true сериализуется как "true" и на некоторых версиях сервера
+    // не распознаётся как запрос на скачивание.
+    const url = pb.files.getUrl(currentRecord, currentFile, { download: '1' });
     const a = document.createElement('a');
     a.href = url;
-    a.download = currentFile;
-    a.target = '_blank';
+    a.setAttribute('download', currentFile);
+    a.rel = 'noopener';
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
+    a.remove();
     closeCtxMenu();
   }
 

@@ -16,11 +16,16 @@
     font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
   }
 
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     background: #f8f9fa;
     color: #202124;
-    overflow-x: hidden;
-    padding-bottom: 80px;
+    padding-bottom: 92px;
+    -webkit-font-smoothing: antialiased;
   }
 
   .topbar {
@@ -29,6 +34,7 @@
     z-index: 20;
     background: #fff;
     padding: 12px 16px 8px;
+    padding-top: max(12px, env(safe-area-inset-top));
     display: flex;
     align-items: center;
     gap: 12px;
@@ -45,13 +51,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 1.3em;
+    font-size: 1.25em;
     font-weight: 600;
     color: #1a73e8;
   }
 
   .logo .material-icons-outlined {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .topbar .spacer {
@@ -59,8 +65,8 @@
   }
 
   .topbar .icon-btn {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: none;
     background: transparent;
@@ -68,7 +74,6 @@
     align-items: center;
     justify-content: center;
     color: #5f6368;
-    font-size: 1.2em;
     cursor: pointer;
   }
 
@@ -76,16 +81,20 @@
     background: #f1f3f4;
   }
 
+  .topbar .icon-btn .material-icons-outlined {
+    font-size: 22px;
+  }
+
   .search-wrap {
-    padding: 0 16px 12px;
+    padding: 0 16px 10px;
   }
 
   .search {
     display: flex;
     align-items: center;
     background: #f1f3f4;
-    border-radius: 24px;
-    padding: 10px 16px;
+    border-radius: 22px;
+    padding: 9px 16px;
   }
 
   .search input {
@@ -93,9 +102,10 @@
     border: none;
     outline: none;
     background: transparent;
-    font-size: 1em;
+    font-size: 0.95em;
     color: #202124;
     margin-left: 10px;
+    min-width: 0;
   }
 
   .search .material-icons-outlined {
@@ -103,9 +113,53 @@
     font-size: 22px;
   }
 
+  .breadcrumbs {
+    padding: 4px 12px 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 2px;
+    font-size: 0.9em;
+    min-height: 30px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .breadcrumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .crumb {
+    color: #5f6368;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .crumb:active {
+    background: #f1f3f4;
+  }
+
+  .crumb.current {
+    color: #202124;
+    font-weight: 500;
+  }
+
+  .crumb-sep {
+    color: #dadce0;
+    font-size: 0.8em;
+    flex-shrink: 0;
+  }
+
   .section-title {
-    padding: 8px 16px;
-    font-size: 1.1em;
+    padding: 4px 16px;
+    font-size: 1.05em;
     font-weight: 500;
     color: #202124;
     display: flex;
@@ -121,9 +175,9 @@
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    padding: 8px 16px 16px;
+    padding: 10px 16px 16px;
   }
 
   .file-card {
@@ -131,8 +185,14 @@
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-    transition: transform 0.15s;
+    transition: transform 0.12s;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
 
   .file-card:active {
@@ -140,24 +200,35 @@
   }
 
   .file-thumb {
-    height: 120px;
+    height: 118px;
     background: #f1f3f4;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     position: relative;
+    flex-shrink: 0;
   }
 
   .file-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
 
   .file-thumb .material-icons-outlined {
-    font-size: 48px;
+    font-size: 46px;
     color: #5f6368;
+  }
+
+  .file-card.is-folder .file-thumb {
+    background: #e8f0fe;
+  }
+
+  .file-card.is-folder .file-thumb .material-icons-outlined {
+    color: #1a73e8;
+    font-size: 58px;
   }
 
   .file-info {
@@ -165,9 +236,10 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
   }
 
-  .file-info .material-icons-outlined {
+  .file-info > .material-icons-outlined {
     font-size: 18px;
     color: #5f6368;
     flex-shrink: 0;
@@ -180,7 +252,7 @@
   }
 
   .file-name {
-    font-size: 0.85em;
+    font-size: 0.82em;
     font-weight: 500;
     color: #202124;
     white-space: nowrap;
@@ -189,7 +261,7 @@
   }
 
   .file-date {
-    font-size: 0.7em;
+    font-size: 0.68em;
     color: #5f6368;
     margin-top: 2px;
   }
@@ -197,6 +269,7 @@
   .list-view .grid {
     display: block;
     padding: 0;
+    gap: 0;
   }
 
   .list-view .file-card {
@@ -204,8 +277,14 @@
     box-shadow: none;
     border-bottom: 1px solid #f1f3f4;
     display: flex;
+    flex-direction: row;
     align-items: center;
     padding: 10px 16px;
+  }
+
+  .list-view .file-card:active {
+    transform: none;
+    background: #f8f9fa;
   }
 
   .list-view .file-thumb {
@@ -217,6 +296,10 @@
 
   .list-view .file-thumb .material-icons-outlined {
     font-size: 24px;
+  }
+
+  .list-view .file-card.is-folder .file-thumb .material-icons-outlined {
+    font-size: 26px;
   }
 
   .list-view .file-info {
@@ -238,15 +321,22 @@
   .empty p {
     margin-top: 12px;
     font-size: 0.95em;
+    line-height: 1.4;
+  }
+
+  .fab-group {
+    position: fixed;
+    right: 18px;
+    bottom: calc(92px + env(safe-area-inset-bottom, 0));
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .fab {
-    position: fixed;
-    right: 20px;
-    bottom: 96px;
-    z-index: 30;
-    width: 60px;
-    height: 60px;
+    width: 58px;
+    height: 58px;
     border-radius: 18px;
     background: #fff;
     border: 1px solid #dadce0;
@@ -256,15 +346,26 @@
     justify-content: center;
     color: #1a73e8;
     cursor: pointer;
-    transition: transform 0.15s;
+    transition: transform 0.12s;
   }
 
   .fab:active {
     transform: scale(0.92);
   }
 
+  .fab.small {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    color: #5f6368;
+  }
+
   .fab .material-icons-outlined {
-    font-size: 28px;
+    font-size: 26px;
+  }
+
+  .fab.small .material-icons-outlined {
+    font-size: 22px;
   }
 
   .bottom-nav {
@@ -290,11 +391,12 @@
     background: transparent;
     cursor: pointer;
     color: #5f6368;
-    font-size: 0.7em;
+    font-size: 0.68em;
+    gap: 3px;
   }
 
   .nav-btn .material-icons-outlined {
-    font-size: 24px;
+    font-size: 23px;
   }
 
   .nav-btn.active {
@@ -317,27 +419,28 @@
   .viewer-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 8px;
-    padding-top: max(12px, env(safe-area-inset-top));
+    gap: 8px;
+    padding: 10px 6px;
+    padding-top: max(10px, env(safe-area-inset-top));
     color: #fff;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.65);
     position: relative;
     z-index: 2;
   }
 
   .viewer-header .title {
     flex: 1;
-    font-size: 0.95em;
+    font-size: 0.92em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 500;
+    min-width: 0;
   }
 
   .viewer-header .icon-btn {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     border: none;
     background: transparent;
@@ -346,6 +449,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
 
   .viewer-header .icon-btn:active {
@@ -359,12 +463,14 @@
     justify-content: center;
     overflow: hidden;
     padding: 8px;
+    min-height: 0;
   }
 
   .viewer-body img,
   .viewer-body video {
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain;
   }
 
   .viewer-body iframe {
@@ -388,12 +494,18 @@
     font-size: 80px;
   }
 
+  .viewer-body .placeholder p {
+    margin-top: 12px;
+    font-size: 0.95em;
+    line-height: 1.4;
+  }
+
   .viewer-footer {
     display: flex;
     gap: 8px;
     padding: 12px 16px;
     padding-bottom: max(12px, env(safe-area-inset-bottom));
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.65);
     justify-content: center;
   }
 
@@ -407,6 +519,11 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    justify-content: center;
+  }
+
+  .btn .material-icons-outlined {
+    font-size: 20px;
   }
 
   .btn-light {
@@ -416,6 +533,11 @@
 
   .btn-danger {
     background: #d93025;
+    color: #fff;
+  }
+
+  .btn-primary {
+    background: #1a73e8;
     color: #fff;
   }
 
@@ -429,8 +551,10 @@
     border-radius: 20px 20px 0 0;
     padding: 20px 20px max(20px, env(safe-area-inset-bottom));
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-    transform: translateY(100%);
+    transform: translateY(110%);
     transition: transform 0.3s ease;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
   .upload-sheet.active {
@@ -457,6 +581,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 6px 0;
+    gap: 12px;
   }
 
   .upload-item .name {
@@ -464,11 +589,12 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
-    margin-right: 12px;
+    min-width: 0;
   }
 
   .upload-item .status {
     font-weight: 600;
+    flex-shrink: 0;
   }
 
   .upload-item .status.ok {
@@ -494,29 +620,82 @@
     transition: 0.3s;
   }
 
-  .ctx-menu {
+  .sheet-overlay {
     position: fixed;
-    z-index: 60;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    min-width: 200px;
-    padding: 6px 0;
-    display: none;
+    inset: 0;
+    z-index: 59;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
   }
 
-  .ctx-menu.active {
-    display: block;
+  .sheet-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .ctx-sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 8px 0 max(12px, env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.18);
+    transform: translateY(110%);
+    transition: transform 0.25s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .ctx-sheet.active {
+    transform: translateY(0);
+  }
+
+  .ctx-handle {
+    width: 40px;
+    height: 4px;
+    background: #dadce0;
+    border-radius: 2px;
+    margin: 8px auto 12px;
+  }
+
+  .ctx-header {
+    padding: 4px 20px 12px;
+    border-bottom: 1px solid #f1f3f4;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .ctx-header .material-icons-outlined {
+    font-size: 26px;
+    color: #5f6368;
+    flex-shrink: 0;
+  }
+
+  .ctx-header .ctx-title {
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #202124;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
   }
 
   .ctx-item {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 18px;
+    gap: 16px;
+    padding: 14px 20px;
     cursor: pointer;
     color: #3c4043;
-    font-size: 0.92em;
+    font-size: 0.95em;
   }
 
   .ctx-item:active {
@@ -524,8 +703,9 @@
   }
 
   .ctx-item .material-icons-outlined {
-    font-size: 20px;
+    font-size: 22px;
     color: #5f6368;
+    flex-shrink: 0;
   }
 
   .ctx-item.danger {
@@ -539,7 +719,7 @@
   .toast {
     position: fixed;
     left: 50%;
-    bottom: 100px;
+    bottom: calc(100px + env(safe-area-inset-bottom, 0));
     transform: translateX(-50%) translateY(20px);
     background: #323232;
     color: #fff;
@@ -549,22 +729,83 @@
     z-index: 200;
     opacity: 0;
     transition: 0.3s;
-    max-width: 90%;
+    max-width: calc(100% - 32px);
     text-align: center;
     pointer-events: none;
+    word-break: break-word;
   }
 
   .toast.show {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+
+  .dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .dialog-overlay.active {
+    display: flex;
+  }
+
+  .dialog {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .dialog h3 {
+    font-size: 1.05em;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: #202124;
+  }
+
+  .dialog input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    font-size: 1em;
+    outline: none;
+    color: #202124;
+  }
+
+  .dialog input:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15);
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 18px;
+  }
+
+  .dialog-actions .btn {
+    padding: 10px 18px;
+  }
+
+  .dialog-actions .btn-text {
+    background: transparent;
+    color: #5f6368;
+  }
+
+  .dialog-actions .btn-text:active {
+    background: #f1f3f4;
+  }
 </style>
- 
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="/icons/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="MyCloud">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 <body>
 
@@ -577,7 +818,7 @@
   <button class="icon-btn" onclick="toggleView()" id="viewBtn">
     <span class="material-icons-outlined">view_list</span>
   </button>
-  <button class="icon-btn" onclick="loadFiles(true)">
+  <button class="icon-btn" onclick="loadAll(true)">
     <span class="material-icons-outlined">refresh</span>
   </button>
 </div>
@@ -589,20 +830,28 @@
   </div>
 </div>
 
+<div class="breadcrumbs" id="breadcrumbs"></div>
+
 <div class="section-title">
-  Все файлы <span class="count" id="count"></span>
+  <span id="sectionLabel">Все файлы</span>
+  <span class="count" id="count"></span>
 </div>
 
 <div class="grid" id="fileGrid"></div>
 
 <div class="empty" id="emptyState" style="display:none;">
   <span class="material-icons-outlined">cloud_upload</span>
-  <p>Здесь пока пусто<br>Нажмите «+», чтобы загрузить файл</p>
+  <p id="emptyText">Здесь пока пусто<br>Нажмите «+», чтобы загрузить файл</p>
 </div>
 
-<button class="fab" onclick="document.getElementById('uploadInput').click()">
-  <span class="material-icons-outlined">add</span>
-</button>
+<div class="fab-group">
+  <button class="fab small" onclick="openFolderDialog()">
+    <span class="material-icons-outlined">create_new_folder</span>
+  </button>
+  <button class="fab" onclick="document.getElementById('uploadInput').click()">
+    <span class="material-icons-outlined">add</span>
+  </button>
+</div>
 
 <input type="file" id="uploadInput" multiple style="display:none;">
 
@@ -611,13 +860,13 @@
     <span class="material-icons-outlined">folder</span>
     <span>Все</span>
   </button>
+  <button class="nav-btn" onclick="setTab('folders', this)">
+    <span class="material-icons-outlined">folder_special</span>
+    <span>Папки</span>
+  </button>
   <button class="nav-btn" onclick="setTab('images', this)">
     <span class="material-icons-outlined">image</span>
     <span>Фото</span>
-  </button>
-  <button class="nav-btn" onclick="setTab('videos', this)">
-    <span class="material-icons-outlined">movie</span>
-    <span>Видео</span>
   </button>
   <button class="nav-btn" onclick="setTab('docs', this)">
     <span class="material-icons-outlined">description</span>
@@ -637,7 +886,7 @@
       <span class="material-icons-outlined">arrow_back</span>
     </button>
     <div class="title" id="viewerTitle">Файл</div>
-    <button class="icon-btn" onclick="openCtxMenu(event)">
+    <button class="icon-btn" onclick="openCtxMenu()">
       <span class="material-icons-outlined">more_vert</span>
     </button>
   </div>
@@ -655,18 +904,39 @@
   </div>
 </div>
 
-<div class="ctx-menu" id="ctxMenu">
-  <div class="ctx-item" onclick="downloadCurrent()">
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeCtxMenu()"></div>
+
+<div class="ctx-sheet" id="ctxSheet">
+  <div class="ctx-handle"></div>
+  <div class="ctx-header">
+    <span class="material-icons-outlined" id="ctxIcon">insert_drive_file</span>
+    <div class="ctx-title" id="ctxTitle">Файл</div>
+  </div>
+  <div class="ctx-item" id="ctxOpen">
+    <span class="material-icons-outlined">open_in_new</span> Открыть
+  </div>
+  <div class="ctx-item" id="ctxDownload">
     <span class="material-icons-outlined">download</span> Скачать
   </div>
-  <div class="ctx-item" onclick="shareCurrent()">
+  <div class="ctx-item" id="ctxShare">
     <span class="material-icons-outlined">link</span> Копировать ссылку
   </div>
-  <div class="ctx-item" onclick="openInNewTab()">
-    <span class="material-icons-outlined">open_in_new</span> Открыть в браузере
+  <div class="ctx-item" id="ctxMove">
+    <span class="material-icons-outlined">drive_file_move</span> Переместить
   </div>
-  <div class="ctx-item danger" onclick="deleteCurrent()">
+  <div class="ctx-item danger" id="ctxDelete">
     <span class="material-icons-outlined">delete</span> Удалить
+  </div>
+</div>
+
+<div class="dialog-overlay" id="dialogOverlay">
+  <div class="dialog">
+    <h3 id="dialogTitle">Новая папка</h3>
+    <input type="text" id="dialogInput" placeholder="Название" autocomplete="off">
+    <div class="dialog-actions">
+      <button class="btn btn-text" onclick="closeDialog()">Отмена</button>
+      <button class="btn btn-primary" onclick="confirmDialog()" id="dialogConfirm">Создать</button>
+    </div>
   </div>
 </div>
 
@@ -675,23 +945,32 @@
 <script>
   const CONFIG = {
     serverUrl: 'https://forcedatabase.dpdns.org',
-    collection: 'myfiles',
-    fileField: 'file'
+    filesCollection: 'myfiles',
+    foldersCollection: 'folders',
+    fileField: 'file',
+    parentField: 'parent'
   };
 
   const pb = new PocketBase(CONFIG.serverUrl);
   pb.autoCancellation(false);
 
-  let allRecords = [];
+  let allFolders = [];
+  let allFiles = [];
+  let currentFolderId = null;
   let currentRecord = null;
   let currentFile = null;
+  let currentType = null;
   let currentTab = 'all';
   let listView = false;
+  let dialogMode = null;
+  let moveTargetRecord = null;
+  let moveTargetType = null;
 
   const dom = {
     topbar: document.getElementById('topbar'),
     grid: document.getElementById('fileGrid'),
     empty: document.getElementById('emptyState'),
+    emptyText: document.getElementById('emptyText'),
     count: document.getElementById('count'),
     search: document.getElementById('searchInput'),
     viewBtn: document.getElementById('viewBtn'),
@@ -702,17 +981,20 @@
     viewer: document.getElementById('viewer'),
     viewerTitle: document.getElementById('viewerTitle'),
     viewerBody: document.getElementById('viewerBody'),
-    ctxMenu: document.getElementById('ctxMenu'),
-    toast: document.getElementById('toast')
+    ctxSheet: document.getElementById('ctxSheet'),
+    sheetOverlay: document.getElementById('sheetOverlay'),
+    ctxIcon: document.getElementById('ctxIcon'),
+    ctxTitle: document.getElementById('ctxTitle'),
+    toast: document.getElementById('toast'),
+    breadcrumbs: document.getElementById('breadcrumbs'),
+    sectionLabel: document.getElementById('sectionLabel'),
+    dialogOverlay: document.getElementById('dialogOverlay'),
+    dialogTitle: document.getElementById('dialogTitle'),
+    dialogInput: document.getElementById('dialogInput'),
+    dialogConfirm: document.getElementById('dialogConfirm')
   };
 
   const utils = {
-    getFileNames(record) {
-      const val = record[CONFIG.fileField];
-      if (!val) return [];
-      return Array.isArray(val) ? val : [val];
-    },
-
     isImage(name) {
       return /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(name);
     },
@@ -753,6 +1035,18 @@
 
     escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    },
+
+    getParentId(record) {
+      const p = record[CONFIG.parentField];
+      if (!p) return null;
+      return Array.isArray(p) ? (p[0] || null) : p;
+    },
+
+    getFileNames(record) {
+      const val = record[CONFIG.fileField];
+      if (!val) return [];
+      return Array.isArray(val) ? val : [val];
     }
   };
 
@@ -763,90 +1057,244 @@
     dom.toast._t = setTimeout(() => dom.toast.classList.remove('show'), 2200);
   }
 
-  async function loadFiles(showMsg) {
+  async function loadAll(showMsg) {
     try {
-      allRecords = await pb.collection(CONFIG.collection).getFullList({ sort: '-created' });
+      const [folders, files] = await Promise.all([
+        pb.collection(CONFIG.foldersCollection).getFullList({ sort: 'name' }),
+        pb.collection(CONFIG.filesCollection).getFullList({ sort: '-created' })
+      ]);
+      allFolders = folders;
+      allFiles = files;
+      renderBreadcrumbs();
       renderFiles();
       if (showMsg) showToast('Обновлено');
     } catch (err) {
       console.error(err);
-      showToast('Ошибка загрузки списка');
+      showToast('Ошибка загрузки');
     }
+  }
+
+  function getCurrentFolders() {
+    return allFolders.filter(f => utils.getParentId(f) === currentFolderId);
+  }
+
+  function getCurrentFiles() {
+    return allFiles.filter(f => utils.getParentId(f) === currentFolderId);
+  }
+
+  function renderBreadcrumbs() {
+    const chain = [];
+    let id = currentFolderId;
+    while (id) {
+      const folder = allFolders.find(f => f.id === id);
+      if (!folder) break;
+      chain.unshift(folder);
+      id = utils.getParentId(folder);
+    }
+
+    dom.breadcrumbs.innerHTML = '';
+
+    const rootCrumb = document.createElement('span');
+    rootCrumb.className = 'crumb' + (chain.length === 0 ? ' current' : '');
+    rootCrumb.textContent = 'MyCloud';
+    rootCrumb.onclick = () => navigateTo(null);
+    dom.breadcrumbs.appendChild(rootCrumb);
+
+    chain.forEach((folder, index) => {
+      const sep = document.createElement('span');
+      sep.className = 'crumb-sep';
+      sep.textContent = '›';
+      dom.breadcrumbs.appendChild(sep);
+
+      const crumb = document.createElement('span');
+      crumb.className = 'crumb' + (index === chain.length - 1 ? ' current' : '');
+      crumb.textContent = folder.name;
+      crumb.onclick = () => navigateTo(folder.id);
+      dom.breadcrumbs.appendChild(crumb);
+    });
+
+    dom.breadcrumbs.scrollLeft = dom.breadcrumbs.scrollWidth;
+
+    const currentFolder = currentFolderId ? allFolders.find(f => f.id === currentFolderId) : null;
+    dom.sectionLabel.textContent = currentFolder ? currentFolder.name : 'Все файлы';
+  }
+
+  function navigateTo(folderId) {
+    currentFolderId = folderId;
+    dom.search.value = '';
+    renderBreadcrumbs();
+    renderFiles();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function renderFiles() {
     const search = dom.search.value.toLowerCase();
     dom.grid.innerHTML = '';
 
-    const filtered = allRecords.filter(r => {
-      const names = utils.getFileNames(r);
-      if (names.length === 0) return false;
-      if (search && !names.some(n => n.toLowerCase().includes(search))) return false;
-      if (currentTab === 'images') return names.some(n => utils.isImage(n));
-      if (currentTab === 'videos') return names.some(n => utils.isVideo(n));
-      if (currentTab === 'docs') return names.some(n => utils.isDoc(n));
-      return true;
-    });
+    let folders = getCurrentFolders();
+    let files = getCurrentFiles();
 
-    dom.count.textContent = filtered.length ? `(${filtered.length})` : '';
+    if (currentTab === 'folders') files = [];
+    else if (currentTab === 'images') {
+      folders = [];
+      files = files.filter(f => {
+        const n = utils.getFileNames(f)[0] || '';
+        return utils.isImage(n);
+      });
+    } else if (currentTab === 'docs') {
+      folders = [];
+      files = files.filter(f => {
+        const n = utils.getFileNames(f)[0] || '';
+        return utils.isDoc(n);
+      });
+    }
 
-    if (filtered.length === 0) {
+    if (search) {
+      folders = folders.filter(f => f.name.toLowerCase().includes(search));
+      files = files.filter(f => {
+        const n = utils.getFileNames(f)[0] || '';
+        return n.toLowerCase().includes(search);
+      });
+    }
+
+    const total = folders.length + files.length;
+    dom.count.textContent = total ? `(${total})` : '';
+
+    if (total === 0) {
       dom.empty.style.display = 'block';
+      dom.emptyText.innerHTML = search
+        ? 'Ничего не найдено'
+        : currentFolderId
+          ? 'Папка пуста<br>Загрузите файл или создайте вложенную папку'
+          : 'Здесь пока пусто<br>Нажмите «+», чтобы загрузить файл';
       return;
     }
     dom.empty.style.display = 'none';
 
-    filtered.forEach(record => {
-      const names = utils.getFileNames(record);
-      if (names.length === 0) return;
+    folders.forEach(folder => renderFolderCard(folder));
+    files.forEach(file => renderFileCard(file));
+  }
 
-      const fileName = names[0];
-      const fileUrl = pb.files.getUrl(record, fileName);
-      const icon = utils.getIcon(fileName);
-      const isImg = utils.isImage(fileName);
+  function renderFolderCard(folder) {
+    const card = document.createElement('div');
+    card.className = 'file-card is-folder';
+    card.dataset.id = folder.id;
 
-      const card = document.createElement('div');
-      card.className = 'file-card';
-      card.dataset.id = record.id;
+    bindPress(card, () => openCtxMenuFor(folder, null, 'folder'));
 
-      let pressTimer;
-      const startPress = e => {
-        pressTimer = setTimeout(() => {
-          e.preventDefault();
-          openCtxMenuFor(record, fileName, e);
-        }, 500);
-      };
-      const cancelPress = () => clearTimeout(pressTimer);
-
-      card.addEventListener('touchstart', startPress, { passive: true });
-      card.addEventListener('touchend', cancelPress);
-      card.addEventListener('touchmove', cancelPress);
-      card.addEventListener('mousedown', startPress);
-      card.addEventListener('mouseup', cancelPress);
-      card.addEventListener('mouseleave', cancelPress);
-      card.addEventListener('click', () => openViewer(record, fileName));
-
-      card.innerHTML = `
-        <div class="file-thumb">
-          ${isImg
-            ? `<img src="${fileUrl}" loading="lazy" alt="">`
-            : `<span class="material-icons-outlined">${icon}</span>`}
-        </div>
-        <div class="file-info">
-          <span class="material-icons-outlined">${icon}</span>
-          <div class="file-meta">
-            <div class="file-name">${utils.escapeHtml(fileName)}</div>
-            <div class="file-date">${utils.formatDate(record.created)}</div>
-          </div>
-        </div>
-      `;
-      dom.grid.appendChild(card);
+    card.addEventListener('click', () => {
+      if (card._wasLongPress) {
+        card._wasLongPress = false;
+        return;
+      }
+      navigateTo(folder.id);
     });
+
+    card.innerHTML = `
+      <div class="file-thumb">
+        <span class="material-icons-outlined">folder</span>
+      </div>
+      <div class="file-info">
+        <span class="material-icons-outlined">folder</span>
+        <div class="file-meta">
+          <div class="file-name">${utils.escapeHtml(folder.name)}</div>
+          <div class="file-date">Папка</div>
+        </div>
+      </div>
+    `;
+    dom.grid.appendChild(card);
+  }
+
+  function renderFileCard(record) {
+    const names = utils.getFileNames(record);
+    if (names.length === 0) return;
+
+    const fileName = names[0];
+    const fileUrl = pb.files.getUrl(record, fileName);
+    const icon = utils.getIcon(fileName);
+    const isImg = utils.isImage(fileName);
+
+    const card = document.createElement('div');
+    card.className = 'file-card';
+    card.dataset.id = record.id;
+
+    bindPress(card, () => openCtxMenuFor(record, fileName, 'file'));
+
+    card.addEventListener('click', () => {
+      if (card._wasLongPress) {
+        card._wasLongPress = false;
+        return;
+      }
+      openViewer(record, fileName);
+    });
+
+    card.innerHTML = `
+      <div class="file-thumb">
+        ${isImg
+          ? `<img src="${fileUrl}" loading="lazy" alt="">`
+          : `<span class="material-icons-outlined">${icon}</span>`}
+      </div>
+      <div class="file-info">
+        <span class="material-icons-outlined">${icon}</span>
+        <div class="file-meta">
+          <div class="file-name">${utils.escapeHtml(fileName)}</div>
+          <div class="file-date">${utils.formatDate(record.created)}</div>
+        </div>
+      </div>
+    `;
+    dom.grid.appendChild(card);
+  }
+
+  function bindPress(card, onLongPress) {
+    let pressTimer = null;
+    let moved = false;
+
+    const cancel = () => {
+      if (pressTimer) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+      }
+    };
+
+    card.addEventListener('touchstart', () => {
+      moved = false;
+      card._wasLongPress = false;
+      pressTimer = setTimeout(() => {
+        if (!moved) {
+          card._wasLongPress = true;
+          if (navigator.vibrate) navigator.vibrate(15);
+          onLongPress();
+        }
+      }, 450);
+    }, { passive: true });
+
+    card.addEventListener('touchmove', () => {
+      moved = true;
+      cancel();
+    }, { passive: true });
+
+    card.addEventListener('touchend', cancel);
+    card.addEventListener('touchcancel', cancel);
+
+    card.addEventListener('mousedown', () => {
+      moved = false;
+      card._wasLongPress = false;
+      pressTimer = setTimeout(() => {
+        if (!moved) {
+          card._wasLongPress = true;
+          onLongPress();
+        }
+      }, 450);
+    });
+
+    card.addEventListener('mouseup', cancel);
+    card.addEventListener('mouseleave', cancel);
   }
 
   function openViewer(record, fileName) {
     currentRecord = record;
     currentFile = fileName;
+    currentType = 'file';
 
     const url = pb.files.getUrl(record, fileName);
     const ext = fileName.split('.').pop().toLowerCase();
@@ -864,7 +1312,7 @@
       dom.viewerBody.innerHTML = `
         <div class="placeholder">
           <span class="material-icons-outlined">${utils.getIcon(fileName)}</span>
-          <p style="margin-top:12px;">Предпросмотр недоступен<br>Скачайте файл, чтобы открыть</p>
+          <p>Предпросмотр недоступен<br>Скачайте файл, чтобы открыть</p>
         </div>`;
     }
 
@@ -878,25 +1326,19 @@
     document.body.style.overflow = '';
     currentRecord = null;
     currentFile = null;
+    currentType = null;
   }
 
   function downloadCurrent() {
-    if (!currentRecord || !currentFile) {
-      showToast('Сначала выберите файл');
-      return;
-    }
-
-    // PocketBase включает принудительное скачивание только при download=1.
-    // Значение true сериализуется как "true" и на некоторых версиях сервера
-    // не распознаётся как запрос на скачивание.
-    const url = pb.files.getUrl(currentRecord, currentFile, { download: '1' });
+    if (!currentRecord || !currentFile) return;
+    const url = pb.files.getUrl(currentRecord, currentFile, { download: true });
     const a = document.createElement('a');
     a.href = url;
-    a.setAttribute('download', currentFile);
-    a.rel = 'noopener';
+    a.download = currentFile;
+    a.target = '_blank';
     document.body.appendChild(a);
     a.click();
-    a.remove();
+    document.body.removeChild(a);
     closeCtxMenu();
   }
 
@@ -926,17 +1368,44 @@
   async function deleteCurrent() {
     if (!currentRecord) return;
     closeCtxMenu();
+
+    if (currentType === 'folder') {
+      if (!confirm('Удалить папку «' + currentRecord.name + '» и всё её содержимое?')) return;
+      try {
+        await deleteFolderRecursive(currentRecord.id);
+        showToast('Папка удалена');
+        await loadAll();
+      } catch (err) {
+        showToast('Ошибка удаления');
+        console.error(err);
+      }
+      return;
+    }
+
     if (!confirm('Удалить файл «' + currentFile + '»?')) return;
 
     try {
-      await pb.collection(CONFIG.collection).delete(currentRecord.id);
+      await pb.collection(CONFIG.filesCollection).delete(currentRecord.id);
       closeViewer();
       showToast('Файл удалён');
-      await loadFiles();
+      await loadAll();
     } catch (err) {
       showToast('Ошибка удаления');
       console.error(err);
     }
+  }
+
+  async function deleteFolderRecursive(folderId) {
+    const childFolders = allFolders.filter(f => utils.getParentId(f) === folderId);
+    const childFiles = allFiles.filter(f => utils.getParentId(f) === folderId);
+
+    for (const folder of childFolders) {
+      await deleteFolderRecursive(folder.id);
+    }
+    for (const file of childFiles) {
+      await pb.collection(CONFIG.filesCollection).delete(file.id);
+    }
+    await pb.collection(CONFIG.foldersCollection).delete(folderId);
   }
 
   async function uploadFiles(files) {
@@ -953,8 +1422,13 @@
 
       try {
         const body = {};
-        body[CONFIG.fileField] = [file];
-        await pb.collection(CONFIG.collection).create(body);
+        body[CONFIG.fileField] = file;
+        if (currentFolderId) {
+          body[CONFIG.parentField] = currentFolderId;
+        }
+
+        await pb.collection(CONFIG.filesCollection).create(body);
+
         const s = row.querySelector('.status');
         s.textContent = '✓';
         s.classList.add('ok');
@@ -962,7 +1436,7 @@
         const s = row.querySelector('.status');
         s.textContent = '✗';
         s.classList.add('err');
-        console.error('Ошибка загрузки', file.name, err);
+        console.error('Ошибка загрузки:', err);
       }
 
       done++;
@@ -971,7 +1445,7 @@
 
     setTimeout(() => {
       dom.uploadSheet.classList.remove('active');
-      loadFiles();
+      loadAll();
     }, 900);
   }
 
@@ -988,71 +1462,157 @@
     dom.viewBtn.querySelector('.material-icons-outlined').textContent = listView ? 'grid_view' : 'view_list';
   }
 
-  function openCtxMenu(e) {
+  function openCtxMenu() {
     if (!currentRecord) return;
-    dom.ctxMenu.classList.add('active');
-    positionMenu(dom.ctxMenu, e);
-    e.stopPropagation();
+    dom.ctxSheet.classList.add('active');
+    dom.sheetOverlay.classList.add('active');
+    updateCtxMenu();
   }
 
-  function openCtxMenuFor(record, fileName, e) {
+  function openCtxMenuFor(record, fileName, type) {
     currentRecord = record;
     currentFile = fileName;
-    dom.ctxMenu.classList.add('active');
-    positionMenu(dom.ctxMenu, e);
+    currentType = type;
+
+    dom.ctxTitle.textContent = type === 'folder' ? record.name : fileName;
+    dom.ctxIcon.textContent = type === 'folder' ? 'folder' : utils.getIcon(fileName);
+
+    dom.ctxSheet.classList.add('active');
+    dom.sheetOverlay.classList.add('active');
+    updateCtxMenu();
   }
 
-  function positionMenu(menu, e) {
-    const touch = e.touches ? e.touches[0] : e;
-    const w = 220;
-    const h = 220;
-    let left = touch.clientX;
-    let top = touch.clientY;
-
-    if (left + w > window.innerWidth) left = window.innerWidth - w - 12;
-    if (top + h > window.innerHeight) top = window.innerHeight - h - 12;
-
-    menu.style.left = left + 'px';
-    menu.style.top = top + 'px';
-    menu.style.right = 'auto';
-    menu.style.bottom = 'auto';
+  function updateCtxMenu() {
+    const isFolder = currentType === 'folder';
+    document.getElementById('ctxDownload').style.display = isFolder ? 'none' : 'flex';
+    document.getElementById('ctxShare').style.display = isFolder ? 'none' : 'flex';
+    document.getElementById('ctxOpen').querySelector('span:last-child').textContent =
+      isFolder ? 'Открыть папку' : 'Открыть в браузере';
   }
 
   function closeCtxMenu() {
-    dom.ctxMenu.classList.remove('active');
+    dom.ctxSheet.classList.remove('active');
+    dom.sheetOverlay.classList.remove('active');
   }
+
+  function openFolderDialog() {
+    dialogMode = 'create-folder';
+    dom.dialogTitle.textContent = 'Новая папка';
+    dom.dialogInput.value = '';
+    dom.dialogInput.placeholder = 'Название папки';
+    dom.dialogConfirm.textContent = 'Создать';
+    dom.dialogOverlay.classList.add('active');
+    setTimeout(() => dom.dialogInput.focus(), 100);
+  }
+
+  function openMoveDialog() {
+    if (!currentRecord) return;
+    moveTargetRecord = currentRecord;
+    moveTargetType = currentType;
+    dialogMode = 'move';
+    dom.dialogTitle.textContent = 'Переместить в папку';
+    dom.dialogInput.value = '';
+    dom.dialogInput.placeholder = 'ID папки (пусто = корень)';
+    dom.dialogConfirm.textContent = 'Переместить';
+    dom.dialogOverlay.classList.add('active');
+    closeCtxMenu();
+    setTimeout(() => dom.dialogInput.focus(), 100);
+  }
+
+  function closeDialog() {
+    dom.dialogOverlay.classList.remove('active');
+    dialogMode = null;
+    moveTargetRecord = null;
+    moveTargetType = null;
+  }
+
+  async function confirmDialog() {
+    const value = dom.dialogInput.value.trim();
+
+    if (dialogMode === 'create-folder') {
+      if (!value) {
+        showToast('Введите название');
+        return;
+      }
+      try {
+        const body = { name: value };
+        if (currentFolderId) body[CONFIG.parentField] = currentFolderId;
+        await pb.collection(CONFIG.foldersCollection).create(body);
+        closeDialog();
+        showToast('Папка создана');
+        await loadAll();
+      } catch (err) {
+        showToast('Ошибка создания');
+        console.error(err);
+      }
+      return;
+    }
+
+    if (dialogMode === 'move') {
+      try {
+        const body = {};
+        if (value) {
+          body[CONFIG.parentField] = value;
+        } else {
+          body[CONFIG.parentField] = null;
+        }
+
+        if (moveTargetType === 'folder') {
+          await pb.collection(CONFIG.foldersCollection).update(moveTargetRecord.id, body);
+        } else {
+          await pb.collection(CONFIG.filesCollection).update(moveTargetRecord.id, body);
+        }
+        closeDialog();
+        showToast('Перемещено');
+        await loadAll();
+      } catch (err) {
+        showToast('Ошибка перемещения');
+        console.error(err);
+      }
+    }
+  }
+
+  document.getElementById('ctxOpen').addEventListener('click', () => {
+    if (currentType === 'folder') {
+      navigateTo(currentRecord.id);
+      closeCtxMenu();
+    } else {
+      openInNewTab();
+    }
+  });
+
+  document.getElementById('ctxDownload').addEventListener('click', downloadCurrent);
+  document.getElementById('ctxShare').addEventListener('click', shareCurrent);
+  document.getElementById('ctxMove').addEventListener('click', openMoveDialog);
+  document.getElementById('ctxDelete').addEventListener('click', deleteCurrent);
 
   dom.uploadInput.addEventListener('change', e => {
     if (e.target.files.length) uploadFiles(Array.from(e.target.files));
     e.target.value = '';
   });
 
-  document.addEventListener('click', e => {
-    if (!e.target.closest('#ctxMenu') && !e.target.closest('.icon-btn')) {
-      closeCtxMenu();
-    }
+  dom.dialogInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirmDialog();
+    if (e.key === 'Escape') closeDialog();
+  });
+
+  dom.dialogOverlay.addEventListener('click', e => {
+    if (e.target === dom.dialogOverlay) closeDialog();
   });
 
   window.addEventListener('scroll', () => {
     dom.topbar.classList.toggle('scrolled', window.scrollY > 4);
   });
 
-  pb.collection(CONFIG.collection).subscribe('*', e => {
-    if (e.action === 'create' || e.action === 'delete') loadFiles();
+  pb.collection(CONFIG.filesCollection).subscribe('*', e => {
+    if (e.action === 'create' || e.action === 'delete' || e.action === 'update') loadAll();
   });
 
-  loadFiles();
-
- 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .catch(error => {
-        console.error('Ошибка Service Worker:', error);
-      });
+  pb.collection(CONFIG.foldersCollection).subscribe('*', e => {
+    if (e.action === 'create' || e.action === 'delete' || e.action === 'update') loadAll();
   });
-}
 
+  loadAll();
 </script>
 </body>
 </html>

@@ -1,21 +1,21 @@
 
 {
-  "id": "/mycloud/",
+  "id": "/MyCloud/",
   "name": "MyCloud",
   "short_name": "MyCloud",
-  "start_url": "/mycloud/",
-  "scope": "/mycloud/",
+  "start_url": "/MyCloud/",
+  "scope": "/MyCloud/",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#f8f9fa",
   "icons": [
     {
-      "src": "/mycloud/icons/icon-192.png",
+      "src": "/MyCloud/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/mycloud/icons/icon-512.png",
+      "src": "/MyCloud/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
